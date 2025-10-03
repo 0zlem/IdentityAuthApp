@@ -10,6 +10,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("config/secrets.json", optional: true, reloadOnChange: true);
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") // frontend port
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddOpenApi();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);

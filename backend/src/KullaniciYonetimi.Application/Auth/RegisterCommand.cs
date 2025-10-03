@@ -30,6 +30,12 @@ internal sealed class RegisterCommandHandler(UserManager<AppUser> userManager, I
 
         IdentityResult result = await userManager.CreateAsync(user, request.Password);
 
+        if (result.Succeeded)
+        {
+            user.EmailConfirmed = true;
+            await userManager.UpdateAsync(user);
+        }
+
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         if (!result.Succeeded)

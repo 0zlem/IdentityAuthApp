@@ -16,7 +16,7 @@ public class LoginCommandResponse
     public string Token { get; set; } = default!;
 }
 
-internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IUnitOfWork unitOfWork) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
+internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
 {
     public async Task<Result<LoginCommandResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
@@ -49,8 +49,8 @@ internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, Sign
         if (!signInResult.Succeeded)
             return Result<LoginCommandResponse>.Failure("Şifreniz hatalıdır!");
 
-        if (signInResult.IsNotAllowed)
-            return Result<LoginCommandResponse>.Failure("Mail adresiniz onaylanmamıştır.");
+        // if (signInResult.IsNotAllowed)
+        //     return Result<LoginCommandResponse>.Failure("Mail adresiniz onaylanmamıştır.");
 
         return Result<LoginCommandResponse>.Succeed(new LoginCommandResponse { Token = "Token" });
     }
