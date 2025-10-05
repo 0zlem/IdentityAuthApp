@@ -27,7 +27,7 @@ internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, Sign
             return Result<LoginCommandResponse>.Failure("Kullanıcı bulunamadı!");
         }
 
-        SignInResult signInResult = await signInManager.CheckPasswordSignInAsync(user, request.Password, true);
+        SignInResult signInResult = await signInManager.PasswordSignInAsync(user, request.Password, isPersistent: false, lockoutOnFailure: true);
 
 
         if (signInResult.IsLockedOut)
@@ -52,7 +52,7 @@ internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, Sign
         // if (signInResult.IsNotAllowed)
         //     return Result<LoginCommandResponse>.Failure("Mail adresiniz onaylanmamıştır.");
 
-        return Result<LoginCommandResponse>.Succeed(new LoginCommandResponse { Token = "Token" });
+        return Result<LoginCommandResponse>.Succeed(new LoginCommandResponse { Token = "Authenticated" });
     }
 }
 

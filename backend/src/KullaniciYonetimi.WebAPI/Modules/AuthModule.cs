@@ -40,6 +40,13 @@ public static class AuthModule
             return response.IsSuccessful ? Results.Ok(response) : Results.BadRequest(response);
         }).Produces<Result<LoginCommandResponse>>();
 
+        groupBuilder.MapPost("/logout", async (ISender sender, LogoutCommand request, CancellationToken cancellationToken) =>
+       {
+           var response = await sender.Send(request, cancellationToken);
+
+           return response.IsSuccessful ? Results.Ok(response) : Results.BadRequest(response);
+       }).Produces<Result<string>>();
+
         groupBuilder.MapPost("/role", async (ISender sender, RoleCommand request, CancellationToken cancellationToken) =>
         {
             var response = await sender.Send(request, cancellationToken);

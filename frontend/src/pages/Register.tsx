@@ -24,6 +24,7 @@ function Register() {
       <div className="flex flex-row justify-center items-center gap-4">
         {/* Register Card */}
         <div
+          onClick={() => setActiveCard(0)}
           className={`w-[650px] h-[750px] transition-all duration-300 rounded-xl shadow-lg ${
             activeCard === 0
               ? "opacity-100 scale-100"
@@ -37,6 +38,7 @@ function Register() {
 
         {/* Login Card */}
         <div
+          onClick={() => setActiveCard(1)}
           className={`w-[650px] h-[750px] transition-all duration-300 rounded-xl shadow-lg ${
             activeCard === 1
               ? "opacity-100 scale-100"

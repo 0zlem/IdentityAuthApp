@@ -161,7 +161,7 @@ function RegisterForm({ onSuccess }: RegisterFormProps) {
             )}
           />
           <Button
-            className="border-none hover:bg-[#853240] bg-[#3e2528] hover:text-white shadow-2xl p-5 text-lg w-full z-10"
+            className="border-none hover:bg-[#853240] bg-[#3e2528] hover:text-white shadow-2xl p-5 text-lg w-full z-10 cursor-pointer"
             variant="outline"
             type="submit"
           >

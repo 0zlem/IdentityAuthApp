@@ -15,6 +15,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { login } from "../services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useState } from "react";
+import { LiaEyeSlashSolid } from "react-icons/lia";
+import { LiaEyeSolid } from "react-icons/lia";
 
 const formSchema = z.object({
   usernameOrEmail: z
@@ -36,6 +39,7 @@ const formSchema = z.object({
 });
 
 function LoginForm() {
+  const [hidePassword, setHidePassword] = useState(false);
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -97,17 +101,26 @@ function LoginForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    className="bg-white border-none text-black font-bold z-10"
-                    {...field}
-                  />
+                  <div className="flex flex-row gap-2">
+                    <Input
+                      type={hidePassword ? "text" : "password"}
+                      className="bg-white border-none text-black font-bold z-10"
+                      {...field}
+                    />
+                    <fieldset
+                      className="mt-2"
+                      onClick={() => setHidePassword(!hidePassword)}
+                    >
+                      {hidePassword ? <LiaEyeSolid /> : <LiaEyeSlashSolid />}
+                    </fieldset>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
           <Button
-            className="border-none hover:bg-[#853240] bg-[#3e2528] hover:text-white shadow-2xl p-5 text-lg w-full z-10"
+            className="border-none hover:bg-[#853240] bg-[#3e2528] hover:text-white shadow-2xl p-5 text-lg w-full z-10 cursor-pointer"
             variant="outline"
             type="submit"
           >

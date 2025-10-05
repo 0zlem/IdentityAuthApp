@@ -19,3 +19,14 @@ export const login = async (data: any) =>{
     const response = await axios.post(`${API_URL}/login`,data);
     return response.data;
 }
+
+export const logout = async () => {
+  const response = await axios.post(`${API_URL}/logout`,{},{withCredentials:true});
+  localStorage.removeItem("token");
+  return response;
+}
+
+export const addRole = async (data:any)=> {
+  const response = await axios.post(`${API_URL}/role`,data);
+  return response.data;
+}
