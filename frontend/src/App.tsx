@@ -10,8 +10,18 @@ import Roles from "./pages/Roles";
 
 const authLoader = async () => {
   const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+  // const fullName = localStorage.getItem("fullName");
   if (!token) throw redirect("/register");
-  return null;
+  return { token, role };
+};
+
+const adminLoader = async () => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+  // const fullName = localStorage.getItem("fullName");
+  if (!token || role !== "Admin") throw redirect("/");
+  return { token, role };
 };
 
 const router = createBrowserRouter([
@@ -27,7 +37,7 @@ const router = createBrowserRouter([
   {
     path: "/roles",
     element: <Roles />,
-    loader: authLoader,
+    loader: adminLoader,
   },
 ]);
 

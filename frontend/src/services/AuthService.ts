@@ -16,17 +16,43 @@ export const register = async (data:any) => {
 };
 
 export const login = async (data: any) =>{
-    const response = await axios.post(`${API_URL}/login`,data);
+
+    const response = await axios.post(`${API_URL}/login`,data,{
+      withCredentials:true
+    });
     return response.data;
 }
 
 export const logout = async () => {
   const response = await axios.post(`${API_URL}/logout`,{},{withCredentials:true});
-  localStorage.removeItem("token");
+localStorage.clear();
   return response;
 }
 
-export const addRole = async (data:any)=> {
-  const response = await axios.post(`${API_URL}/role`,data);
+export const addRole = async (data: any) => {
+  const response = await axios.post(`${API_URL}/role`, data, {
+    withCredentials: true,
+  });
+  return response.data;
+};
+
+export const getRoles = async () => {
+  const response = await axios.get(`${API_URL}/roles`, {
+    withCredentials: true,
+  });
+  return response.data;
+};
+
+export const getUsers = async () => {
+  const response = await axios.get(`${API_URL}/users`,{
+    withCredentials:true,
+  });
+  return response.data;
+}
+
+export const addUserRole = async (data: any) => {
+  const response = await axios.post(`${API_URL}/userRole/create`,data,{
+    withCredentials:true
+  });
   return response.data;
 }

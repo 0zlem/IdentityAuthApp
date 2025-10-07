@@ -15,16 +15,16 @@ internal sealed class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid, I
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Ignore<IdentityUserClaim<Guid>>();
-        modelBuilder.Ignore<IdentityUserLogin<Guid>>();
-        modelBuilder.Ignore<IdentityUserToken<Guid>>();
-        modelBuilder.Ignore<IdentityRoleClaim<Guid>>();
-
         modelBuilder.Entity<AppUserRole>().HasKey(x => new { x.RoleId, x.UserId }); // Composite Key
 
         modelBuilder.Entity<AppUser>().ToTable("Users");
         modelBuilder.Entity<AppRole>().ToTable("Roles");
         modelBuilder.Entity<AppUserRole>().ToTable("UserRoles");
+
+        modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("UserClaims");
+        modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("UserLogins");
+        modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens");
+        modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("RoleClaims");
 
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }

@@ -13,7 +13,6 @@ import { Input } from "./ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { register } from "../services/AuthService";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 interface RegisterFormProps {
@@ -67,6 +66,7 @@ function RegisterForm({ onSuccess }: RegisterFormProps) {
         toast.success("Registration successful! You can login!");
         onSuccess?.();
         console.log("Response:", response);
+        form.reset();
       } else {
         toast.error(response.message || "Registration failed");
       }

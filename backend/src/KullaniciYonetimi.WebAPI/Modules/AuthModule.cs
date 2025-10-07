@@ -60,6 +60,12 @@ public static class AuthModule
             return response.IsSuccessful ? Results.Ok(response) : Results.BadRequest(response);
         }).Produces<Result<List<string>>>();
 
+        groupBuilder.MapGet("/users", async (ISender sender, CancellationToken cancellationToken) =>
+      {
+          var response = await sender.Send(new GetAllUsersQuery(), cancellationToken);
+          return response.IsSuccessful ? Results.Ok(response) : Results.BadRequest(response);
+      }).Produces<Result<List<string>>>();
+
         groupBuilder.MapPost("/userRole/create", async (ISender sender, UserRolesCommand request, CancellationToken cancellationToken) =>
         {
             var response = await sender.Send(request, cancellationToken);

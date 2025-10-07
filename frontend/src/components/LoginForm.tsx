@@ -63,6 +63,8 @@ function LoginForm() {
         console.log("Login successful:", response);
         toast.success("Login successful!");
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("role", response.data.role);
+        localStorage.setItem("fullName", response.data.fullName);
         await navigate("/");
       } else {
         console.error("Login failed:", response);

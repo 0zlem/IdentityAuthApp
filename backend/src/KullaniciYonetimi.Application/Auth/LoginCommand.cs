@@ -14,6 +14,8 @@ public sealed record LoginCommand(string UserNameOrEmail, string Password)
 public class LoginCommandResponse
 {
     public string Token { get; set; } = default!;
+    public string Role { get; set; } = default!;
+    public string FullName { get; set; } = default!;
 }
 
 internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
@@ -52,7 +54,11 @@ internal sealed class LoginCommandHandler(UserManager<AppUser> userManager, Sign
         // if (signInResult.IsNotAllowed)
         //     return Result<LoginCommandResponse>.Failure("Mail adresiniz onaylanmamıştır.");
 
-        return Result<LoginCommandResponse>.Succeed(new LoginCommandResponse { Token = "Authenticated" });
+        var roles = await userManager.GetRolesAsync(user);
+        var role = roles.FirstOrDefault() ?? "User";
+
+
+        return Result<LoginCommandResponse>.Succeed(new LoginCommandResponse { Token = "Authenticated", Role = role, FullName = user.FullName });
     }
 }
 
